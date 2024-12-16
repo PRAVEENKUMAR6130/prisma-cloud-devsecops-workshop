@@ -152,6 +152,19 @@ resource "aws_s3_bucket" "flowbucket" {
 
 }
 
+
+resource "aws_s3_bucket" "flowbucket_log_bucket" {
+  bucket = "flowbucket-log-bucket"
+}
+
+resource "aws_s3_bucket_logging" "flowbucket" {
+  bucket = aws_s3_bucket.flowbucket.id
+
+  target_bucket = aws_s3_bucket.flowbucket_log_bucket.id
+  target_prefix = "log/"
+}
+
+
 # OUTPUTS
 output "ec2_public_dns" {
   description = "Web Host Public DNS name"
